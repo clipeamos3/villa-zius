@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Villa ZIUS · Moraira</title>
+<meta name="description" content="Recorre Villa ZIUS en Moraira, Costa Blanca, deslizando la pantalla.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #f6f1ea;
+    --muted: rgba(246, 241, 234, .72);
+    --bg: #0e0d0c;
+    --sand: #d9c7ae;
+    --serif: "Cormorant Garamond", Georgia, serif;
+    --sans: "Inter", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--bg); }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+
+  /* cargando */
+  #loader { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: var(--bg); transition: opacity .8s ease; }
+  #loader.done { opacity: 0; pointer-events: none; }
+  #loader .name { font-family: var(--serif); font-size: clamp(36px, 6vw, 64px); letter-spacing: .08em; }
+  #loader .bar { width: 160px; height: 1px; background: rgba(255,255,255,.15); margin: 18px auto 0; overflow: hidden; }
+  #loader .bar i { display: block; height: 100%; width: 0; background: var(--sand); transition: width .2s; }
+
+  /* recorrido */
+  #tour { position: relative; }
+  #stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+  canvas { display: block; width: 100%; height: 100%; }
+  .shade { position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,0) 45%, rgba(0,0,0,.7) 100%); }
+
+  .cap { position: absolute; left: 0; right: 0; bottom: 14vh; padding: 0 24px; text-align: center; opacity: 0; pointer-events: none; will-change: opacity, transform; }
+  .cap .k { font-size: 12px; font-weight: 500; letter-spacing: .32em; text-transform: uppercase; color: var(--sand); margin-bottom: 10px; text-shadow: 0 1px 10px rgba(0,0,0,.6); }
+  .cap .t { font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 5.6vw, 72px); line-height: 1.05; text-shadow: 0 2px 24px rgba(0,0,0,.45); }
+  .cap.hero .t { font-size: clamp(56px, 10vw, 128px); letter-spacing: .04em; }
+  .cap.hero { bottom: auto; top: 50%; transform: translateY(-50%); }
+
+  #hint { position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); text-align: center; transition: opacity .4s; }
+  #hint::after { content: ""; display: block; width: 1px; height: 34px; margin: 10px auto 0; background: linear-gradient(var(--sand), transparent); animation: drip 1.8s ease-in-out infinite; transform-origin: top; }
+  @keyframes drip { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
+
+  header { position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; padding-top: max(18px, env(safe-area-inset-top)); }
+  header { transition: background .4s; }
+  header.solid { background: rgba(14,13,12,.92); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .brand { font-family: var(--serif); font-size: 22px; letter-spacing: .12em; }
+  .lang { display: flex; gap: 4px; }
+  .lang button { background: none; border: 1px solid rgba(255,255,255,.25); color: var(--ink); font: 500 11px var(--sans); letter-spacing: .12em; padding: 6px 9px; border-radius: 999px; cursor: pointer; }
+  .lang button[aria-pressed="true"] { background: var(--ink); color: #111; border-color: var(--ink); }
+
+  /* índice de estancias */
+  #rail { position: fixed; right: 24px; top: 50%; transform: translateY(-50%); z-index: 20; list-style: none; display: flex; flex-direction: column; gap: 14px; transition: opacity .4s; }
+  #rail li { display: flex; align-items: center; justify-content: flex-end; gap: 10px; cursor: pointer; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.5); transition: color .3s; }
+  #rail li::after { content: ""; width: 6px; height: 6px; border-radius: 50%; border: 1px solid currentColor; transition: background .3s, transform .3s; }
+  #rail li.on { color: var(--ink); }
+  #rail li.on::after { background: var(--sand); border-color: var(--sand); transform: scale(1.3); }
+  #rail li span { opacity: 0; transform: translateX(6px); transition: opacity .3s, transform .3s; }
+  #rail li.on span, #rail:hover li span { opacity: 1; transform: none; }
+
+  #progress { position: fixed; left: 0; top: 0; height: 2px; width: 0; background: var(--sand); z-index: 30; }
+
+  /* final */
+  #info { position: relative; z-index: 5; background: var(--bg); padding: 110px 24px 80px; }
+  .wrap { max-width: 980px; margin: 0 auto; }
+  #info h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(40px, 6vw, 72px); line-height: 1.05; }
+  #info .lead { color: var(--muted); font-size: 17px; line-height: 1.7; max-width: 620px; margin-top: 20px; font-weight: 300; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,.1); margin: 56px 0; border: 1px solid rgba(255,255,255,.1); }
+  .stats div { background: var(--bg); padding: 28px 20px; }
+  .stats b { display: block; font-family: var(--serif); font-weight: 400; font-size: 44px; color: var(--sand); }
+  .stats span { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .cta { display: inline-flex; align-items: center; gap: 12px; background: var(--ink); color: #111; text-decoration: none; padding: 16px 28px; border-radius: 999px; font-weight: 500; font-size: 14px; letter-spacing: .06em; }
+  .cta:hover { background: var(--sand); }
+  footer { color: rgba(255,255,255,.4); font-size: 12px; margin-top: 70px; line-height: 1.7; }
+  .demo { position: fixed; left: 24px; bottom: 20px; z-index: 20; font-size: 10px; letter-spacing: .3em; color: rgba(255,255,255,.55); text-transform: uppercase; }
+
+  @media (max-width: 760px) {
+    #rail { display: none; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .cap { bottom: 18vh; }
+    header { padding: 14px 16px; }
+    .demo { left: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) { #hint::after { animation: none; } }
+</style>
+</head>
+<body>
+
+<div id="loader"><div><div class="name">VILLA ZIUS</div><div class="bar"><i></i></div></div></div>
+<div id="progress"></div>
+
+<header>
+  <div class="brand">ZIUS</div>
+  <div class="lang">
+    <button data-lang="es" aria-pressed="true">ES</button>
+    <button data-lang="en" aria-pressed="false">EN</button>
+  </div>
+</header>
+
+<ul id="rail"></ul>
+<div class="demo">Demo</div>
+
+<section id="tour">
+  <div id="stage">
+    <canvas id="c"></canvas>
+    <div class="shade"></div>
+    <div id="caps"></div>
+    <div id="hint" data-i18n="hint"></div>
+  </div>
+</section>
+
+<section id="info">
+  <div class="wrap">
+    <h2 data-i18n="infoTitle"></h2>
+    <p class="lead" data-i18n="infoLead"></p>
+    <div class="stats">
+      <div><b>5</b><span data-i18n="sBed"></span></div>
+      <div><b>10</b><span data-i18n="sGuests"></span></div>
+      <div><b>7</b><span data-i18n="sBath"></span></div>
+      <div><b>15 m</b><span data-i18n="sPool"></span></div>
+    </div>
+    <a class="cta" href="https://www.abahanavillas.com/en/holiday-rentals/villas-moraira/zius" target="_blank" rel="noopener"><span data-i18n="cta"></span> →</a>
+    <footer data-i18n="foot"></footer>
+  </div>
+</section>
+
+<script>
+/* Escenas en orden de recorrido.
+   f: encuadre horizontal inicio->fin (0 izquierda, 1 derecha)
+   z: zoom inicio->fin
+   cap: texto que aparece en esa escena
+   room: nombre en el índice lateral (marca el inicio de una zona) */
+const SCENES = [
+  { f: [.55, .45], z: [1.18, 1.04], cap: "hero", room: "arrival" },
+  { f: [.50, .50], z: [1.00, 1.12] },
+  { f: [.20, .55], z: [1.00, 1.08] },
+  { f: [.30, .65], z: [1.02, 1.10], cap: "pool", room: "pool" },
+  { f: [.75, .40], z: [1.00, 1.08] },
+  { f: [.35, .60], z: [1.00, 1.10], cap: "outdoor", room: "outdoor" },
+  { f: [.30, .62], z: [1.04, 1.10] },
+  { f: [.15, .60], z: [1.00, 1.08], cap: "living", room: "living" },
+  { f: [.65, .30], z: [1.02, 1.10] },
+  { f: [.50, .50], z: [1.00, 1.10] },
+  { f: [.30, .62], z: [1.00, 1.08], cap: "kitchen", room: "kitchen" },
+  { f: [.55, .30], z: [1.02, 1.10] },
+  { f: [.20, .45], z: [1.00, 1.10] },
+  { f: [.65, .30], z: [1.00, 1.08], cap: "bedrooms", room: "bedrooms" },
+  { f: [.30, .60], z: [1.02, 1.10] },
+  { f: [.55, .30], z: [1.00, 1.10], cap: "baths" },
+  { f: [.30, .62], z: [1.00, 1.08], cap: "games", room: "leisure" },
+  { f: [.25, .55], z: [1.02, 1.10] },
+  { f: [.35, .65], z: [1.00, 1.08], cap: "views", room: "views" },
+  { f: [.25, .70], z: [1.00, 1.10], cap: "rooftop" },
+  { f: [.65, .45], z: [1.00, 1.12], cap: "sunset" },
+];
+
+const T = {
+  es: {
+    hint: "Desliza para entrar",
+    hero: ["Moraira · Costa Blanca", "Villa ZIUS"],
+    pool: ["La piscina", "15 metros de agua privada"],
+    outdoor: ["Exterior", "Vivir al aire libre"],
+    living: ["Interior", "Dos salones luminosos"],
+    kitchen: ["Cocina", "Para cocinar y compartir"],
+    bedrooms: ["Dormitorios", "Cinco suites, camas XL"],
+    baths: ["Baños", "Siete baños"],
+    games: ["Ocio", "Sala de juegos y bar"],
+    views: ["Vistas", "El Mediterráneo al fondo"],
+    rooftop: ["Azotea", "Solárium con vistas"],
+    sunset: ["Al caer la tarde", "Atardeceres en Moraira"],
+    rooms: { arrival: "Llegada", pool: "Piscina", outdoor: "Exterior", living: "Salones", kitchen: "Cocina", bedrooms: "Dormitorios", leisure: "Ocio", views: "Vistas" },
+    infoTitle: "Una casa para no salir de ella",
+    infoLead: "Villa ZIUS está en Moraira, en la Costa Blanca. Tiene cinco dormitorios, dos salones, dos cocinas, piscina privada de 15 metros y un solárium en la azotea con vistas al mar y a la montaña.",
+    sBed: "Dormitorios", sGuests: "Huéspedes", sBath: "Baños", sPool: "Piscina",
+    cta: "Consultar disponibilidad",
+    foot: "Demostración de recorrido interactivo. Fotografías y datos: Abahana Villas.",
+  },
+  en: {
+    hint: "Scroll to step inside",
+    hero: ["Moraira · Costa Blanca", "Villa ZIUS"],
+    pool: ["The pool", "15 metres of private water"],
+    outdoor: ["Outside", "Life in the open air"],
+    living: ["Inside", "Two light-filled lounges"],
+    kitchen: ["Kitchen", "Made for cooking together"],
+    bedrooms: ["Bedrooms", "Five suites, XL beds"],
+    baths: ["Bathrooms", "Seven bathrooms"],
+    games: ["Leisure", "Games room and bar"],
+    views: ["Views", "The Mediterranean beyond"],
+    rooftop: ["Rooftop", "A solarium with a view"],
+    sunset: ["Evening", "Moraira sunsets"],
+    rooms: { arrival: "Arrival", pool: "Pool", outdoor: "Outdoor", living: "Lounges", kitchen: "Kitchen", bedrooms: "Bedrooms", leisure: "Leisure", views: "Views" },
+    infoTitle: "A house you won't want to leave",
+    infoLead: "Villa ZIUS sits in Moraira on the Costa Blanca. Five bedrooms, two lounges, two kitchens, a 15-metre private pool and a rooftop solarium with sea and mountain views.",
+    sBed: "Bedrooms", sGuests: "Guests", sBath: "Bathrooms", sPool: "Pool",
+    cta: "Check availability",
+    foot: "Interactive tour demo. Photos and details: Abahana Villas.",
+  },
+};
+
+let lang = "es";
+try { lang = localStorage.getItem("zius-lang") || "es"; } catch (e) {}
+
+const N = SCENES.length;
+const VH_PER_SCENE = 90;           // cuánto hay que deslizar por estancia
+const FADE = 0.35;                  // parte de la escena que dura el fundido
+const tour = document.getElementById("tour");
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+const capsBox = document.getElementById("caps");
+const rail = document.getElementById("rail");
+const hint = document.getElementById("hint");
+const bar = document.getElementById("progress");
+const header = document.querySelector("header");
+const imgs = [];
+
+tour.style.height = (N * VH_PER_SCENE + 100) + "vh";
+
+/* textos */
+const capEls = [];
+SCENES.forEach((s, i) => {
+  if (!s.cap) return;
+  const el = document.createElement("div");
+  el.className = "cap" + (s.cap === "hero" ? " hero" : "");
+  el.innerHTML = '<div class="k"></div><div class="t"></div>';
+  capsBox.appendChild(el);
+  capEls.push({ i, key: s.cap, el });
+});
+const railEls = [];
+SCENES.forEach((s, i) => {
+  if (!s.room) return;
+  const li = document.createElement("li");
+  li.innerHTML = "<span></span>";
+  li.addEventListener("click", () => goTo(i));
+  rail.appendChild(li);
+  railEls.push({ i, key: s.room, li });
+});
+
+function applyLang() {
+  const t = T[lang];
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-i18n]").forEach(el => el.textContent = t[el.dataset.i18n]);
+  capEls.forEach(c => {
+    c.el.querySelector(".k").textContent = t[c.key][0];
+    c.el.querySelector(".t").textContent = t[c.key][1];
+  });
+  railEls.forEach(r => r.li.querySelector("span").textContent = t.rooms[r.key]);
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+}
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => {
+  lang = b.dataset.lang;
+  try { localStorage.setItem("zius-lang", lang); } catch (e) {}
+  applyLang();
+}));
+applyLang();
+
+/* scroll -> posición en el recorrido */
+function tourLength() { return tour.offsetHeight - window.innerHeight; }
+function targetP() {
+  const y = window.scrollY - tour.offsetTop;
+  return Math.min(Math.max(y / tourLength(), 0), 1) * (N - 1);
+}
+function goTo(i) {
+  window.scrollTo({ top: tour.offsetTop + (i / (N - 1)) * tourLength() + 2, behavior: "smooth" });
+}
+
+/* dibujo */
+function resize() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = Math.round(canvas.clientWidth * dpr);
+  canvas.height = Math.round(canvas.clientHeight * dpr);
+}
+window.addEventListener("resize", resize);
+
+const lerp = (a, b, t) => a + (b - a) * t;
+const ease = t => t * t * (3 - 2 * t);
+
+function drawScene(i, local, alpha, push) {
+  const img = imgs[i];
+  if (!img || !img.naturalWidth || alpha <= 0) return;
+  const s = SCENES[i];
+  const cw = canvas.width, ch = canvas.height;
+  const z = lerp(s.z[0], s.z[1], local) * (1 + push);
+  const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight) * z;
+  const w = img.naturalWidth * scale, h = img.naturalHeight * scale;
+  const f = lerp(s.f[0], s.f[1], local);
+  const x = -(w - cw) * f;
+  const y = -(h - ch) / 2;
+  ctx.globalAlpha = alpha;
+  ctx.drawImage(img, x, y, w, h);
+}
+
+let p = 0;
+function frame() {
+  const tp = targetP();
+  p += (tp - p) * 0.12;                         // inercia suave
+  if (Math.abs(tp - p) < 0.0005) p = tp;
+
+  const cw = canvas.width, ch = canvas.height;
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = "#0e0d0c";
+  ctx.fillRect(0, 0, cw, ch);
+
+  const i = Math.floor(p);
+  const u = p - i;                                // 0..1 dentro de la escena
+  // cada escena se mueve durante su ventana visible [i - FADE, i + 1]
+  const local = k => Math.min(Math.max((p - k + FADE) / (1 + FADE), 0), 1);
+  const fadeStart = 1 - FADE;
+  const mix = u > fadeStart ? ease((u - fadeStart) / FADE) : 0;
+
+  drawScene(i, local(i), 1, mix * 0.10);          // al salir, empuja hacia delante
+  if (i + 1 < N && mix > 0) drawScene(i + 1, local(i + 1), mix, 0);
+  ctx.globalAlpha = 1;
+
+  // textos
+  capEls.forEach(c => {
+    const d = p - c.i;
+    let o;
+    if (c.key === "hero") o = 1 - Math.min(Math.max(d / 0.45, 0), 1);
+    else o = Math.min(Math.max((d + 0.1) / 0.25, 0), 1) * Math.min(Math.max((0.65 - d) / 0.2, 0), 1);
+    c.el.style.opacity = o.toFixed(3);
+    if (c.key !== "hero") c.el.style.transform = `translateY(${((1 - o) * 14).toFixed(1)}px)`;
+  });
+
+  // índice
+  let active = 0;
+  railEls.forEach((r, k) => { if (p + 0.5 >= r.i) active = k; });
+  railEls.forEach((r, k) => r.li.classList.toggle("on", k === active));
+
+  hint.style.opacity = p < 0.15 ? 1 : 0;
+  bar.style.width = (p / (N - 1) * 100).toFixed(2) + "%";
+  const pastTour = window.scrollY > tour.offsetTop + tourLength() + 40;
+  rail.style.opacity = pastTour ? 0 : 1;
+  header.classList.toggle("solid", pastTour);
+
+  requestAnimationFrame(frame);
+}
+
+/* carga de fotos */
+let loaded = 0;
+const loaderBar = document.querySelector("#loader .bar i");
+const loads = SCENES.map((_, i) => new Promise(res => {
+  const src = `img/${String(i + 1).padStart(2, "0")}.webp`;
+  let tries = 0;
+  const done = () => { loaded++; loaderBar.style.width = (loaded / N * 100) + "%"; res(); };
+  const attempt = () => {
+    const img = new Image();
+    img.decoding = "async";
+    img.onload = () => { imgs[i] = img; done(); };
+    img.onerror = () => (++tries < 8) ? setTimeout(attempt, 400 * tries) : done();
+    img.src = tries ? `${src}?r=${tries}` : src;
+  };
+  attempt();
+}));
+// empieza cuando están las primeras; el resto sigue cargando detrás
+Promise.all(loads.slice(0, 4)).then(() => {
+  resize();
+  document.getElementById("loader").classList.add("done");
+  requestAnimationFrame(frame);
+});
+</script>
+</body>
+</html>
