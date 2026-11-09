@@ -54,6 +54,17 @@
     seen[k] = 1;
     urls.push(bigger(s));
   });
+  // quitar fotos que no son de la casa (banners, publicidad): nos quedamos con la carpeta más repetida
+  function dirOf(u) {
+    // carpeta de la foto: todo lo anterior al nombre del archivo
+    var parts = keyOf(u).split("/");
+    var k = parts.findIndex(function (s, i) { return i > 2 && /\.\w{3,4}$/.test(s); });
+    return parts.slice(0, k > 0 ? k : parts.length - 1).join("/");
+  }
+  var count = {};
+  urls.forEach(function (u) { var d = dirOf(u); count[d] = (count[d] || 0) + 1; });
+  var mainDir = Object.keys(count).sort(function (a, b) { return count[b] - count[a]; })[0];
+  if (count[mainDir] >= 3) urls = urls.filter(function (u) { return dirOf(u) === mainDir; });
   if (urls.length < 3) { console.warn("[recorrido] pocas fotos", urls.length); return; }
   var MAX = 24;
   if (urls.length > MAX) {
@@ -71,7 +82,9 @@
   var css = document.createElement("style");
   css.textContent = [
     ".rc-tour{position:relative;background:#0e0d0c;z-index:1;font-family:system-ui,-apple-system,'Segoe UI',sans-serif}",
-    ".rc-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}",
+    ".rc-stage{position:absolute;top:0;left:0;width:100%;height:100vh;height:100svh;overflow:hidden}",
+    ".rc-stage.rc-fixed{position:fixed}",
+    ".rc-stage.rc-end{top:auto;bottom:0}",
     ".rc-stage canvas{display:block;width:100%;height:100%}",
     ".rc-shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.35) 0,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 50%,rgba(0,0,0,.65) 100%)}",
     ".rc-title{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;color:#f6f1ea;padding:0 24px;pointer-events:none}",
@@ -147,8 +160,20 @@
   }
 
   var p = 0, running = true;
+  var stage = tour.querySelector(".rc-stage");
+  // dejar la pantalla fija mientras se recorre (a mano, porque muchas webs rompen "sticky")
+  function pin() {
+    var r = tour.getBoundingClientRect(), vh = window.innerHeight;
+    var fixed = r.top <= 0 && r.bottom >= vh, end = r.bottom < vh;
+    stage.classList.toggle("rc-fixed", fixed);
+    stage.classList.toggle("rc-end", end);
+    stage.style.left = fixed ? r.left + "px" : "";
+    stage.style.width = fixed ? r.width + "px" : "";
+  }
+
   function frame() {
     if (!running) return;
+    pin();
     var tp = clamp((window.scrollY - top()) / len()) * (N - 1);
     p += (tp - p) * 0.12;
     if (Math.abs(tp - p) < 0.0005) p = tp;
