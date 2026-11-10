@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ejemplo de recorrido · Umbral</title>
+<meta name="description" content="Ejemplo de ficha de casa con recorrido a pantalla completa.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .note { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 45; background: rgba(14,13,12,.85); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1px solid var(--line); border-radius: 999px; padding: 10px 10px 10px 20px; font-size: 13px; display: flex; gap: 14px; align-items: center; white-space: nowrap; max-width: calc(100% - 32px); }
+  .note span { overflow: hidden; text-overflow: ellipsis; }
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); margin: 56px 0; }
+  .facts div { background: var(--bg); padding: 28px 20px; }
+  .facts b { display: block; font: 400 44px/1.1 var(--serif); color: var(--sand); }
+  .facts span { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .gal { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 40px; }
+  .gal div { aspect-ratio: 4/3; border-radius: 10px; background: #222 center/cover; }
+  .top .logo { font-size: 20px; }
+  @media (max-width: 900px) { .facts { grid-template-columns: repeat(2, 1fr); } .gal { grid-template-columns: repeat(2, 1fr); } .note { bottom: 12px; font-size: 12px; } }
+</style>
+</head>
+<body>
+<header class="top" id="top">
+  <a class="logo" id="agency" href="index.html">Casa de ejemplo</a>
+  <a class="btn sm ghost" href="index.html#ejemplos">← Volver</a>
+</header>
+
+<section id="tour"></section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="eyebrow" id="where"></div>
+    <h2 id="name"></h2>
+    <p class="lead" id="desc"></p>
+    <div class="facts" id="facts"></div>
+    <a class="btn" href="index.html#contacto">Quiero esto en mi web</a>
+    <p class="fine" style="margin-top:56px">Debajo del recorrido, tu ficha sigue igual que siempre: galería, descripción, mapa y formulario.</p>
+    <div class="gal" id="gal"></div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div>Casa inventada para enseñar el recorrido. Fotos: <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>.</div>
+    <div><a href="index.html">Umbral</a></div>
+  </div>
+</footer>
+
+<div class="note"><span>Ejemplo: así quedaría en tu web</span><a class="btn sm" href="index.html#contacto">Lo quiero</a></div>
+
+<script src="tour.js"></script>
+<script>
+const U = (id, w = 2200) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
+
+const CASAS = {
+  albada: {
+    nombre: "Villa Albada", zona: "Costa Blanca · En venta · 2.450.000 €",
+    desc: "Villa mediterránea de 620 m² en una parcela de 1.800 m² con piscina infinita, vistas al mar y cinco suites. A diez minutos del puerto y de la playa.",
+    datos: [["5", "Dormitorios"], ["6", "Baños"], ["620 m²", "Construidos"], ["1.800 m²", "Parcela"]],
+    escenas: [
+      ["1613490493576-7fde63acd811", [.55, .45], [1.14, 1.04], "Llegada", "Costa Blanca", "Villa Albada"],
+      ["1613977257365-aaae5a9817ff", [.35, .6], [1.0, 1.1], "Piscina", "La piscina", "Agua hasta el horizonte"],
+      ["1543489822-c49534f3271f", [.5, .5], [1.0, 1.12], "Vistas", "Vistas", "El Mediterráneo de frente"],
+      ["1600210491892-03d54c0aaf87", [.3, .65], [1.02, 1.1], "Salón", "Interior", "620 m² llenos de luz"],
+      ["1686023858216-4f54c853acf2", [.6, .35], [1.0, 1.1], "Cocina", "Cocina", "Isla central y despensa"],
+      ["1616594039964-ae9021a400a0", [.4, .6], [1.0, 1.1], "Dormitorios", "Dormitorios", "Cinco suites con baño"],
+      ["1544984243-ec57ea16fe25", [.5, .5], [1.0, 1.12], "Atardecer", "Al caer la tarde", "2.450.000 €"],
+    ],
+  },
+  lumen: {
+    nombre: "Casa Lumen", zona: "Marbella · En venta · 3.900.000 €",
+    desc: "Casa contemporánea de 780 m² con grandes ventanales, jardín con piscina y seis dormitorios. Diseñada para vivir con la luz del sur todo el año.",
+    datos: [["6", "Dormitorios"], ["7", "Baños"], ["780 m²", "Construidos"], ["2.400 m²", "Parcela"]],
+    escenas: [
+      ["1600596542815-ffad4c1539a9", [.5, .5], [1.14, 1.04], "Llegada", "Marbella", "Casa Lumen"],
+      ["1580587771525-78b9dba3b914", [.35, .6], [1.0, 1.1], "Fachada", "Arquitectura", "Líneas limpias, mucha luz"],
+      ["1594479125841-ff7800c6afcc", [.6, .4], [1.0, 1.1], "Jardín", "Exterior", "Jardín y piscina privada"],
+      ["1583847268964-b28dc8f51f92", [.3, .65], [1.02, 1.1], "Salón", "Salón", "Ventanales de suelo a techo"],
+      ["1618221195710-dd6b41faaea6", [.6, .35], [1.0, 1.1], "Estar", "Zona de estar", "Pensada para recibir"],
+      ["1505693416388-ac5ce068fe85", [.4, .6], [1.0, 1.1], "Dormitorios", "Dormitorios", "Seis habitaciones"],
+      ["1599777560450-e462cffc5368", [.5, .5], [1.0, 1.12], "Entorno", "Entorno", "3.900.000 €"],
+    ],
+  },
+};
+
+const id = new URLSearchParams(location.search).get("casa");
+const c = CASAS[id] || CASAS.albada;
+document.title = c.nombre + " · Ejemplo de recorrido";
+document.getElementById("where").textContent = c.zona;
+document.getElementById("name").textContent = c.nombre;
+document.getElementById("desc").textContent = c.desc;
+document.getElementById("facts").innerHTML = c.datos.map(d => `<div><b>${d[0]}</b><span>${d[1]}</span></div>`).join("");
+document.getElementById("gal").innerHTML = c.escenas.slice(0, 6).map(s => `<div style="background-image:url(${U(s[0], 800)})"></div>`).join("");
+
+Tour.mount(document.getElementById("tour"), {
+  escenas: c.escenas.map(([img, f, z, room, k, t]) => ({ src: U(img), f, z, room, cap: { k, t } })),
+  onProgress: (p, past) => document.getElementById("top").classList.toggle("solid", past),
+});
+</script>
+</body>
+</html>

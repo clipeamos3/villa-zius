@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Umbral · Recorridos para inmobiliarias de lujo</title>
+<meta name="description" content="Convertimos las fotos de cada casa de tu web en un recorrido a pantalla completa que se recorre deslizando. Sin cambiar tu web. Funciona en todas tus fichas.">
+<meta property="og:title" content="Umbral · Que tus clientes recorran la casa antes de visitarla">
+<meta property="og:description" content="Recorridos con scroll para webs de inmobiliarias de lujo. Se instala en un día y funciona en todas tus casas.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1200&q=80">
+<meta name="theme-color" content="#0e0d0c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<header class="top" id="top">
+  <a class="logo" href="#">Umbral</a>
+  <nav class="nav" id="nav">
+    <a href="#como">Cómo funciona</a>
+    <a href="#ejemplos">Ejemplos</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#precios">Precios</a>
+    <a href="#preguntas">Preguntas</a>
+    <a class="btn sm" href="#contacto">Prueba gratis</a>
+  </nav>
+  <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false">☰</button>
+</header>
+
+<!-- El propio recorrido es la portada: así se entiende el producto sin explicarlo -->
+<section id="demo"></section>
+
+<!-- El problema -->
+<section class="block" id="problema">
+  <div class="wrap">
+    <div class="eyebrow">El problema</div>
+    <h2 class="reveal">Una casa de dos millones<br>no se puede vender con una galería de fotos.</h2>
+    <p class="lead reveal">Casi todas las fichas de casas de lujo son iguales: una foto grande, una fila de miniaturas y un texto que nadie lee. El cliente pasa dos o tres fotos y se va a otra web. Lo que acabas de ver arriba son las mismas fotos de siempre, pero contadas como una visita.</p>
+    <div class="compare">
+      <div class="reveal">
+        <span class="label">Así es hoy una ficha normal</span>
+        <div class="mock">
+          <div class="bar"><i></i><i></i><i></i></div>
+          <div class="body">
+            <div class="m-title">Villa en venta · 5 dormitorios</div>
+            <div class="m-price">2.450.000 €</div>
+            <div class="grid">
+              <div data-bg="1613490493576-7fde63acd811"></div>
+              <div data-bg="1613977257365-aaae5a9817ff"></div>
+              <div data-bg="1600210491892-03d54c0aaf87"></div>
+              <div data-bg="1616594039964-ae9021a400a0"></div>
+              <div data-bg="1686023858216-4f54c853acf2"></div>
+            </div>
+            <div class="lines"><i style="width:92%"></i><i style="width:80%"></i><i style="width:64%"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <span class="label good">La misma ficha con Umbral</span>
+        <div class="mock">
+          <div class="bar"><i></i><i></i><i></i></div>
+          <div class="hero" data-bg="1613977257365-aaae5a9817ff">
+            <div class="k">Costa Blanca</div>
+            <div class="t">Villa Albada</div>
+            <div class="d">Desliza para entrar ↓</div>
+          </div>
+          <div class="body">
+            <div class="m-title">Villa en venta · 5 dormitorios</div>
+            <div class="m-price">2.450.000 €</div>
+            <div class="lines"><i style="width:92%"></i><i style="width:80%"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cómo funciona -->
+<section class="block alt" id="como">
+  <div class="wrap">
+    <div class="eyebrow">Cómo funciona</div>
+    <h2 class="reveal">No te hacemos una web nueva.<br>Mejoramos la que ya tienes.</h2>
+    <p class="lead reveal">Tu web, tu buscador, tus formularios y tu posicionamiento en Google se quedan como están. Solo añadimos el recorrido arriba de cada ficha.</p>
+    <div class="steps">
+      <div class="reveal">
+        <b>01</b>
+        <h3>Pegamos una línea de código</h3>
+        <p>La ponemos nosotros en la plantilla de tus fichas. Funciona en WordPress, Wix, Webflow, Squarespace o webs hechas a medida.</p>
+        <code class="snip">&lt;script src="umbral.js" defer&gt;&lt;/script&gt;</code>
+      </div>
+      <div class="reveal">
+        <b>02</b>
+        <h3>Se activa en todas tus casas</h3>
+        <p>El recorrido coge las fotos que ya tiene cada anuncio. Cuando subes una casa nueva, su recorrido aparece solo. Tu equipo no tiene que hacer nada.</p>
+      </div>
+      <div class="reveal">
+        <b>03</b>
+        <h3>Tus clientes recorren la casa</h3>
+        <p>Al deslizar, pasan de la fachada a la piscina, al salón y a los dormitorios, con los datos clave apareciendo en pantalla. En ordenador y en móvil.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ventajas -->
+<section class="block" id="ventajas">
+  <div class="wrap">
+    <div class="eyebrow">Qué ganas</div>
+    <h2 class="reveal">Que tu web se recuerde.</h2>
+    <div class="perks">
+      <div class="reveal"><h3>Más tiempo en cada ficha</h3><p>Deslizar engancha. El cliente ve la casa entera en lugar de dos fotos sueltas.</p></div>
+      <div class="reveal"><h3>Te diferencias</h3><p>Tus casas se ven como en la web de una marca de lujo, no como en un portal más.</p></div>
+      <div class="reveal"><h3>Cero trabajo para tu equipo</h3><p>Usa las fotos que ya subís. No hay que grabar nada ni aprender ningún programa.</p></div>
+      <div class="reveal"><h3>Perfecto en móvil</h3><p>La mayoría de tus visitas llegan desde el móvil y desde Instagram. El recorrido está pensado para el pulgar.</p></div>
+      <div class="reveal"><h3>No rompe nada</h3><p>Si un día quieres quitarlo, se borra una línea y tu web queda exactamente como estaba.</p></div>
+      <div class="reveal"><h3>Rápido</h3><p>Las fotos se cargan poco a poco mientras el cliente desliza, para que la página no se haga lenta.</p></div>
+    </div>
+    <div class="platforms reveal">
+      <span>WordPress</span><span>Wix</span><span>Webflow</span><span>Squarespace</span><span>Web a medida</span>
+    </div>
+  </div>
+</section>
+
+<!-- Ejemplos -->
+<section class="block alt" id="ejemplos">
+  <div class="wrap">
+    <div class="eyebrow">Ejemplos</div>
+    <h2 class="reveal">Ábrelo a pantalla completa.</h2>
+    <p class="lead reveal">Cada ejemplo es una ficha de casa inventada, con el recorrido arriba y la información de siempre debajo. Así quedaría en tu web.</p>
+    <div class="cards">
+      <a class="card reveal" href="ejemplo.html?casa=albada" data-bg="1613490493576-7fde63acd811">
+        <div class="in"><div class="k">Villa mediterránea</div><h3>Villa Albada</h3><span class="go">Ver recorrido →</span></div>
+      </a>
+      <a class="card reveal" href="ejemplo.html?casa=lumen" data-bg="1600596542815-ffad4c1539a9">
+        <div class="in"><div class="k">Casa contemporánea</div><h3>Casa Lumen</h3><span class="go">Ver recorrido →</span></div>
+      </a>
+      <a class="card reveal" href="#contacto" data-bg="1543489822-c49534f3271f">
+        <div class="in"><div class="k">Tu casa aquí</div><h3>Te hacemos una gratis</h3><span class="go">Pídela →</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Servicios -->
+<section class="block" id="servicios">
+  <div class="wrap">
+    <div class="eyebrow">Servicios</div>
+    <h2 class="reveal">Todo lo que necesita una casa<br>para venderse por internet.</h2>
+    <div class="services">
+      <div class="service main reveal">
+        <div>
+          <div class="k">Servicio principal</div>
+          <h3>Recorrido en tu web</h3>
+          <p>Instalamos el recorrido en todas las fichas de tu web, adaptado a tus colores y tu letra. Funciona solo con cada casa nueva que subas.</p>
+        </div>
+        <ul>
+          <li>Instalación hecha por nosotros</li>
+          <li>Diseño adaptado a tu marca</li>
+          <li>Funciona en ordenador y móvil</li>
+          <li>Textos con precio, metros y dormitorios</li>
+          <li>En español, inglés y otros idiomas</li>
+        </ul>
+      </div>
+      <div class="service reveal">
+        <div class="k">Redes sociales</div>
+        <h3>Vídeos verticales de tus casas</h3>
+        <p>Con las mismas fotos montamos vídeos para Instagram, TikTok y Reels, con tu logo, música y los datos de la casa. Listos para publicar.</p>
+      </div>
+      <div class="service reveal">
+        <div class="k">Inteligencia artificial</div>
+        <h3>Vídeo cinematográfico</h3>
+        <p>Convertimos las fotos en planos con movimiento de cámara, como si la casa se hubiera grabado con un dron. Ideal para tus casas estrella.</p>
+      </div>
+      <div class="service reveal">
+        <div class="k">Fotos</div>
+        <h3>Mejora y amueblado virtual</h3>
+        <p>Cielos azules, luz más cálida, fotos más nítidas y habitaciones vacías amuebladas por ordenador para que el cliente se imagine viviendo allí.</p>
+      </div>
+      <div class="service reveal">
+        <div class="k">Mantenimiento</div>
+        <h3>Nos ocupamos de todo</h3>
+        <p>Vigilamos que el recorrido funcione siempre, lo arreglamos si cambias de web y te mandamos novedades. Tú solo vendes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Precios -->
+<section class="block alt" id="precios">
+  <div class="wrap">
+    <div class="eyebrow">Precios</div>
+    <h2 class="reveal">Un solo pago.<br>Funciona en todas tus casas.</h2>
+    <p class="lead reveal">El precio depende de cuántas casas tienes en tu web. Antes de pagar nada, te hacemos gratis el recorrido de una de tus casas para que lo veas.</p>
+    <div class="prices">
+      <div class="price reveal">
+        <div class="name">Esencial</div>
+        <div class="amount">1.000 €</div>
+        <div class="for">Hasta 15 casas en tu web</div>
+        <ul>
+          <li>Recorrido en todas tus fichas</li>
+          <li>Adaptado a tus colores y tu letra</li>
+          <li>Instalación hecha por nosotros</li>
+          <li>Un mes de ajustes incluido</li>
+        </ul>
+        <a class="btn ghost" href="#contacto" data-plan="Esencial">Lo quiero</a>
+      </div>
+      <div class="price pop reveal">
+        <div class="name">Agencia</div>
+        <div class="amount">1.900 €</div>
+        <div class="for">Hasta 50 casas en tu web</div>
+        <ul>
+          <li>Todo lo del plan Esencial</li>
+          <li>Textos en cada escena: precio, metros, dormitorios</li>
+          <li>Español e inglés</li>
+          <li>3 casas estrella montadas a mano</li>
+        </ul>
+        <a class="btn" href="#contacto" data-plan="Agencia">Lo quiero</a>
+      </div>
+      <div class="price reveal">
+        <div class="name">Premium</div>
+        <div class="amount"><small>desde</small> 3.000 €</div>
+        <div class="for">Casas ilimitadas</div>
+        <ul>
+          <li>Todo lo del plan Agencia</li>
+          <li>10 casas estrella montadas a mano</li>
+          <li>1 vídeo cinematográfico con IA</li>
+          <li>Todos los idiomas de tu web</li>
+        </ul>
+        <a class="btn ghost" href="#contacto" data-plan="Premium">Hablemos</a>
+      </div>
+    </div>
+    <div class="monthly">
+      <div class="price reveal">
+        <div class="name">Mantenimiento · Tranquilo</div>
+        <div class="amount">50 € <small>/ mes</small></div>
+        <div class="for">Opcional. Para olvidarte del tema.</div>
+        <ul>
+          <li>Revisamos que todo funcione cada semana</li>
+          <li>Lo arreglamos si cambias de web o de plantilla</li>
+          <li>Soporte por WhatsApp</li>
+        </ul>
+      </div>
+      <div class="price reveal">
+        <div class="name">Mantenimiento · Crecer</div>
+        <div class="amount">150 € <small>/ mes</small></div>
+        <div class="for">Opcional. Para tener contenido cada mes.</div>
+        <ul>
+          <li>Todo lo del plan Tranquilo</li>
+          <li>4 vídeos verticales al mes para tus redes</li>
+          <li>Una casa estrella nueva montada a mano cada mes</li>
+        </ul>
+      </div>
+    </div>
+    <p class="fine">Precios sin IVA. Sin permanencia en el mantenimiento: lo puedes dejar cuando quieras.</p>
+  </div>
+</section>
+
+<!-- Preguntas -->
+<section class="block" id="preguntas">
+  <div class="wrap">
+    <div class="eyebrow">Preguntas frecuentes</div>
+    <h2 class="reveal">Lo que suelen preguntarnos.</h2>
+    <div class="faq">
+      <details><summary>¿Tengo que cambiar de web?</summary><p>No. Lo instalamos en la web que ya tienes. Todo lo demás se queda igual: el buscador, los formularios, el diseño y Google.</p></details>
+      <details><summary>¿Tengo que hacer fotos nuevas?</summary><p>No. Usamos las fotos que ya tiene cada anuncio. Si son buenas, el recorrido queda espectacular. Si alguna casa tiene fotos flojas, te lo decimos y te ofrecemos mejorarlas.</p></details>
+      <details><summary>¿Qué pasa cuando subo una casa nueva?</summary><p>Su recorrido aparece solo, sin que tengas que avisarnos. Para tus casas estrella también podemos montarlo a mano: elegimos el orden de las fotos y escribimos los textos.</p></details>
+      <details><summary>¿Hace la web más lenta?</summary><p>No. Las fotos se cargan poco a poco mientras el cliente desliza. La primera se ve enseguida y el resto llega detrás.</p></details>
+      <details><summary>¿Cuánto tardáis en instalarlo?</summary><p>Normalmente entre uno y tres días desde que nos das acceso a tu web.</p></details>
+      <details><summary>¿Y si no me convence?</summary><p>Por eso te hacemos gratis una de tus casas antes de cobrar nada. Y si algún día lo quieres quitar, se borra una línea y tu web queda como estaba.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- Contacto -->
+<section class="block alt" id="contacto">
+  <div class="wrap contact">
+    <div>
+      <div class="eyebrow">Prueba gratis</div>
+      <h2 class="reveal">Mándanos el enlace de una de tus casas.</h2>
+      <p class="lead reveal">En 48 horas te enviamos su recorrido funcionando, para que lo veas con tus fotos. Sin compromiso.</p>
+      <div class="direct">
+        <a id="lnkWhats" href="#" target="_blank" rel="noopener"><span>WhatsApp</span><span>Escríbenos →</span></a>
+        <a id="lnkMail" href="#"><span>Email</span><span id="mailTxt"></span></a>
+        <a id="lnkInsta" href="#" target="_blank" rel="noopener"><span>Instagram</span><span id="instaTxt"></span></a>
+        <a id="lnkTiktok" href="#" target="_blank" rel="noopener"><span>TikTok</span><span id="tiktokTxt"></span></a>
+      </div>
+    </div>
+    <form class="f reveal" id="form">
+      <div class="row">
+        <label>Tu nombre<input name="nombre" required autocomplete="name"></label>
+        <label>Inmobiliaria<input name="agencia" required autocomplete="organization"></label>
+      </div>
+      <div class="row">
+        <label>Email<input name="email" type="email" required autocomplete="email"></label>
+        <label>Teléfono<input name="telefono" type="tel" autocomplete="tel"></label>
+      </div>
+      <label>Enlace a una de tus casas<input name="enlace" type="url" placeholder="https://tuweb.com/casa-ejemplo" required></label>
+      <label>¿Cuántas casas tienes en tu web?
+        <select name="casas">
+          <option>Menos de 15</option><option>Entre 15 y 50</option><option>Más de 50</option>
+        </select>
+      </label>
+      <label>¿Algo más?<textarea name="mensaje" rows="3"></textarea></label>
+      <button class="btn" type="submit">Quiero mi recorrido gratis</button>
+    </form>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div><span class="logo" style="font-size:18px">Umbral</span> · Recorridos para inmobiliarias de lujo</div>
+    <div>Casas de ejemplo inventadas. Fotos: <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>.</div>
+  </div>
+</footer>
+
+<script src="tour.js"></script>
+<script>
+/* ====== DATOS DE CONTACTO: cambiar aquí ====== */
+const CONTACTO = {
+  email: "hola@umbral.studio",       // PENDIENTE: poner el email real
+  whatsapp: "34600000000",           // PENDIENTE: móvil con prefijo, sin + ni espacios
+  instagram: "umbral.studio",        // PENDIENTE
+  tiktok: "umbral.studio",           // PENDIENTE
+};
+/* ============================================= */
+
+const U = (id, w = 2200) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
+
+Tour.mount(document.getElementById("demo"), {
+  pista: "Desliza para ver cómo funciona",
+  extra: '<div class="tour-tag">Ejemplo · Villa Albada (inventada)</div>',
+  escenas: [
+    { src: U("1613490493576-7fde63acd811"), f: [.55, .45], z: [1.14, 1.04], room: "Llegada",
+      cap: { k: "Recorridos para inmobiliarias de lujo", t: "Que tus clientes recorran la casa antes de visitarla.",
+             s: "Convertimos las fotos de cada anuncio de tu web en un recorrido a pantalla completa. Desliza y compruébalo.",
+             html: '<div class="acts"><a class="btn" href="#contacto">Prueba gratis con una de tus casas</a><a class="btn ghost" href="#como">Cómo funciona</a></div>' } },
+    { src: U("1613977257365-aaae5a9817ff"), f: [.35, .6], z: [1.0, 1.1], room: "Piscina",
+      cap: { k: "Costa Blanca · 2.450.000 €", t: "Villa Albada" } },
+    { src: U("1543489822-c49534f3271f"), f: [.5, .5], z: [1.0, 1.12], room: "Vistas",
+      cap: { k: "Vistas", t: "El mar desde la piscina" } },
+    { src: U("1600210491892-03d54c0aaf87"), f: [.3, .65], z: [1.02, 1.1], room: "Salón",
+      cap: { k: "Interior", t: "620 m² llenos de luz" } },
+    { src: U("1686023858216-4f54c853acf2"), f: [.6, .35], z: [1.0, 1.1], room: "Cocina",
+      cap: { k: "Cocina", t: "Para cocinar y compartir" } },
+    { src: U("1616594039964-ae9021a400a0"), f: [.4, .6], z: [1.0, 1.1], room: "Dormitorios",
+      cap: { k: "Dormitorios", t: "Cinco suites con baño" } },
+    { src: U("1544984243-ec57ea16fe25"), f: [.5, .5], z: [1.0, 1.12], room: "Atardecer",
+      cap: { k: "Así de fácil", t: "Las mismas fotos de tu anuncio. Contadas como una visita." } },
+  ],
+  onProgress: (p, past) => document.getElementById("top").classList.toggle("solid", past),
+});
+
+// fondos de las tarjetas y maquetas
+document.querySelectorAll("[data-bg]").forEach(el => {
+  el.style.backgroundImage = `url(${U(el.dataset.bg, 1000)})`;
+});
+
+// menú móvil
+const nav = document.getElementById("nav"), menuBtn = document.getElementById("menuBtn");
+menuBtn.addEventListener("click", () => {
+  const open = nav.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded", open);
+  menuBtn.textContent = open ? "✕" : "☰";
+});
+nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+  nav.classList.remove("open"); menuBtn.textContent = "☰"; menuBtn.setAttribute("aria-expanded", false);
+}));
+
+// aparecer al hacer scroll
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+}), { threshold: .12 });
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+// contacto
+const wa = (txt) => `https://wa.me/${CONTACTO.whatsapp}?text=${encodeURIComponent(txt)}`;
+document.getElementById("lnkWhats").href = wa("Hola, quiero probar el recorrido en una de mis casas.");
+document.getElementById("lnkMail").href = `mailto:${CONTACTO.email}`;
+document.getElementById("mailTxt").textContent = CONTACTO.email;
+document.getElementById("lnkInsta").href = `https://instagram.com/${CONTACTO.instagram}`;
+document.getElementById("instaTxt").textContent = "@" + CONTACTO.instagram;
+document.getElementById("lnkTiktok").href = `https://tiktok.com/@${CONTACTO.tiktok}`;
+document.getElementById("tiktokTxt").textContent = "@" + CONTACTO.tiktok;
+
+let plan = "";
+document.querySelectorAll("[data-plan]").forEach(b => b.addEventListener("click", () => { plan = b.dataset.plan; }));
+
+// El formulario abre el correo del cliente con todo ya escrito (la web no tiene servidor)
+document.getElementById("form").addEventListener("submit", e => {
+  e.preventDefault();
+  const d = Object.fromEntries(new FormData(e.target));
+  const body = `Nombre: ${d.nombre}\nInmobiliaria: ${d.agencia}\nEmail: ${d.email}\nTeléfono: ${d.telefono}\n` +
+    `Casa de ejemplo: ${d.enlace}\nCasas en la web: ${d.casas}\n${plan ? "Plan que me interesa: " + plan + "\n" : ""}\n${d.mensaje}`;
+  location.href = `mailto:${CONTACTO.email}?subject=${encodeURIComponent("Recorrido gratis · " + d.agencia)}&body=${encodeURIComponent(body)}`;
+});
+</script>
+</body>
+</html>
